@@ -1,0 +1,208 @@
+{% load static %}
+{% load i18n thaidate %}
+{#/* See the link below for HTML form development */#}
+{##}
+{#/* Qiita:Let's talk about drawing forms in HTML seriously */#}
+{#/* https://qiita.com/cognitom/items/d39d5f19054c8c8fd592 */#}
+{#/* Qiita:How to make an HTML form from a paper form */#}
+{#/* https://qiita.com/okoppe8/items/45e7b37774899e763d31 */#}
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Print screen</title>
+    <!-- <link href="{% static 'assets/css/print.css' %}" rel="stylesheet"> -->
+
+    <style>
+        
+        /* Print media queries */
+        @page {
+            size: A4; /* size of paper */
+            margin: 0; /* Disable header / footer (valid only in Chrome) */
+        }
+
+        /* Screen media queries (used as print images during development)*/
+        @media screen {
+            body {
+                background: #e0e0e0;
+            }
+
+            .sheet {
+                background: white; /* White background */
+                box-shadow: 0 0.5mm 2mm rgba(0, 0, 0, 0.3); /* Drop shadow */
+                margin: 5mm auto;
+            }
+        }
+
+        /* Initialization of all elements */
+        * {
+            /* Reset margin padding */
+            margin: 0;
+            padding: 0;
+            /* font */
+            font-family: "游ゴシック Medium", "Yu Gothic Medium", "游ゴシック体", YuGothic,
+            sans-serif;
+            font-size: 10pt;
+            font-weight: normal;
+            /* Print background color / background image (valid only in Chrome) */
+            -webkit-print-color-adjust: exact;
+        }
+
+        /* List display initialization */
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        /* Page layout (section.sheet becomes one page) */
+        .sheet {
+            overflow: hidden;
+            position: relative;
+            box-sizing: border-box;
+            page-break-after: always;
+
+            /* Paper size A4 */
+            height: 297mm;
+            width: 210mm;
+
+            /* Margin size */
+            padding-top: 9.6mm;
+            padding-left: 11.6mm;
+            padding-right: 5.6mm;
+        }
+
+        /* Flexbox is effective when making multiple cuts on one page. */
+        div.flex {
+            display: -webkit-flex;
+            display: -moz-flex;
+            display: -ms-flex;
+            display: -o-flex;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        /* Pour a fixed size cut sheet into flexbox */
+        /* Qiita: If you want to put elements side by side, there is only flex box! */
+        /* https://qiita.com/HiromuMasuda0228/items/baf8015076d7d90b8fea */
+        div.cell {
+            position: relative;
+            width: 96.4mm;
+            height: 65.3mm;
+            /* width: 92.4mm; */
+            /* height: 82.3mm; */
+        }
+
+        /* Specify the location of the item by the distance from the upper left of the cut sheet */
+        div.cell p.nId_person {
+            position: absolute;
+            font-size: 10pt;
+            top: 5mm;
+            left: 5mm;
+        }
+
+        div.cell p.cGender {
+            position: absolute;
+            width: 80.0mm;
+            font-size: 10pt;
+            top: 12mm;
+            left: 5mm;
+        }
+
+        div.cell p.cFname {
+            position: absolute;
+            width: 80.0mm;
+            font-size: 10pt;
+            top: 19mm;
+            left: 5mm;
+        }
+
+        div.cell p.nAge {
+            position: absolute;
+            font-size: 10pt;
+            top: 27.0mm;
+            left: 5mm;
+        }
+
+        div.cell p.cRoom {
+            position: absolute;
+            font-size: 10pt;
+            top: 33.0mm;
+            left: 5mm;
+        }
+
+        div.cell p.dDate {
+            position: absolute;
+            font-size: 10pt;
+            top: 40.0mm;
+            left: 5mm;
+        }
+
+        div.cell p.cPro {
+            position: absolute;
+            font-size: 10pt;
+            top: 47.0mm;
+            left: 5mm;
+        }
+
+        div.cell p.cRec {
+            position: absolute;
+            font-size: 10pt;
+            top: 54.0mm;
+            left: 5mm;
+        }
+
+        div.cell p.cSup {
+            position: absolute;
+            font-size: 10pt;
+            top: 61.0mm;
+            left: 5mm;
+        }
+    </style>
+
+</head>
+<body class="A4">
+<section class="sheet">
+<div class="flex">
+
+{% for item in object_list  %}
+<div class="cell">
+<p class="nId_person"> รหัส : {{ item.nId_person }}</p>
+<p class="cGender"> เพศ : {{ item.cGender }}</p>
+<p class="cFname"> ชิ่อ-นามสกุล : {{ item.cFname }}</p>
+<p class="nAge"> อายุ : {{ item.nAge }}</p>
+<p class="cRoom"> สถานธรรม : {{ item.cRoom }}</p>
+{% language 'th' %}
+<p class="dDate"> วันรับธรรมะ : {{ item.dDate|thaidate:"l, d F Y" }}</p>
+{% endlanguage %}
+<p class="cPro"> เตี่ยนฉวนซือ : {{ item.cPro }}</p>
+<p class="cRec"> อ.แนะนำ : {{ item.cRec }}</p>
+<p class="cSup"> อ.รับรอง : {{ item.cSup }}</p>
+</div>
+{# 12 sheets for each sheet of paper #}
+{% if forloop.counter|divisibleby:"12" and not forloop.last %}
+</div>
+</section>
+<section class="sheet">
+<div class="flex">
+{% endif %}
+
+{% endfor %}
+</div>
+</section>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        // The print screen is displayed automatically. Close the window by printing or canceling
+        setTimeout(function () {
+            window.print();
+            window.close();
+        }, 200);
+    })
+</script>
+</body>
+</html>

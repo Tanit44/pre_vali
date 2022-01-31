@@ -1,0 +1,347 @@
+{% extends 'layouts/base_all.html' %}
+
+{% block main_content %}
+
+<!-- {% load bootstrap4 %}  -->
+<!-- {% bootstrap_css %}  -->
+{% bootstrap_javascript jquery='full' %}
+{{ form.media }}
+{% load crispy_forms_tags %}
+{% load i18n thaidate %}
+
+<main class="app-content">
+  <div class="app-title">
+    <div>
+      <!-- <h1><i class="fa fa-address-card"></i> ระบบฐานข้อมูลกลาง</h1> -->
+      <!-- <p>สำหรับ เพิ่มผู้ใช้งาน</p> -->
+      {% if user.user_type == "1" %}  
+      <h5>ทุกกลุ่ม <---> วันรับธรรมะ (จีน): {{ lunar2 }} <--->
+      {% language 'th' %}
+      (ไทย): {{ dDate|thaidate:"l, d F Y" }}
+      {% endlanguage %}
+      </h5>
+      {% elif user.user_type == "2" %}  
+      <h5>กลุ่ม กทม <---> วันรับธรรมะ (จีน): {{ lunar2 }} <--->
+      {% language 'th' %}
+      (ไทย): {{ dDate|thaidate:"l, d F Y" }}
+      {% endlanguage %}
+      {% elif user.user_type == "3" %}  
+      <h5>กลุ่ม กบินทร์บุรี <---> วันรับธรรมะ (จีน): {{ lunar2 }} <--->
+      {% language 'th' %}
+      (ไทย): {{ dDate|thaidate:"l, d F Y" }}
+      {% endlanguage %}
+      {% endif %}  
+    </div>
+    <ul class="app-breadcrumb breadcrumb">
+      <!-- <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li> -->
+      <!-- <li class="breadcrumb-item"><a href="{% url 'add_staff' %}">เพิ่มผู้ใช้งาน</a></li> -->
+      <li class="nav-item">
+        <a class="btn btn-outline-secondary" href="{% url 'tableall' %}" >Close</a>
+    </li>
+    </ul>
+  </div>
+  <div class="container-fluid">
+    <!-- <div class="container"> -->
+      <!-- <div class="row"> -->
+      <form action="" method="post" autocomplete="off">
+            {% csrf_token %}  
+          <div class="col-lg-12 col-md-12 col-sm-12">
+                      
+              
+              <div class="">
+                  <div class="card-header">
+                      <ul class="nav nav-tabs card-header-tabs">
+                          <li class="nav-item">
+                              <a class="nav-link active" data-toggle="tab" href="#detail-1">ข้อมูล-1</a>
+                          </li>
+                          <li class="nav-item">
+                              <a class="nav-link" data-toggle="tab" href="#detail-2">ข้อมูล-2</a>
+                          </li>
+                          <li class="nav-item">
+                              <a class="nav-link" data-toggle="tab" href="#detail-3">ข้อมูล-3</a>
+                          </li>
+                          <li class="nav-item">
+                              <a class="nav-link" data-toggle="tab" href="#detail-4">หมายเหตุ</a>
+                          </li>
+                      </ul>
+                  </div>
+                  <div class="tab-content card-body">
+                      <div id="detail-1" class="tab-pane active">
+                        <div class="row mb-3">
+                          <input type="hidden" name="nId_person" value="{{ next_nId_person }}">
+                          <div class="col-md-2" style="display: none;">
+                            {% if next_nId_person %}
+                              {{" "}}
+                            {% else %}
+                              {{form.nId_person}}
+                            {% endif %}
+                          </div>
+                          <div class="col-md-2">
+                            <label for="cGender"> เพศ</label>
+                            {{form.cGender}}  
+                          </div>
+                          <div class="col-md-3">
+                            <label for="cFname"> ชื่อ-นามสกุล</label>
+                            {{form.cFname}}  
+                          </div>
+                          <div class="col-md-2">
+                            <label for="cName"> ชื่อจีน</label>
+                            {{form.cName}}  
+                          </div>
+                          <div class="col-md-2">
+                            <label for="nAge"> อายุ</label>
+                            {{form.nAge}}  
+                          </div>
+                          <div class="col-md-3">
+                            <label for="dDate"> วันรับธรรมะ</label>
+                            {{form.dDate}}                   
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <div class="col-md-3">
+                            <label for="cDate_dc"> วันรับธรรมะ (จีน)</label>
+                            {% if next_nId_person %}
+                              {{" "}}
+                            {% else %}
+                              {{form.cDate_dc}}
+                            {% endif %}                           
+                          </div>
+                          <div class="col-md-2">
+                            <label for="cLevel"> ธรรมวุฒิ</label>
+                            {{form.cLevel}}                   
+                          </div>
+                          <div class="col-md-3">
+                            <label for="cPro"> อ.ถ่ายทอดเบิกธรรม</label>
+                            {{form.cPro}}  
+                          </div>
+                          <div class="col-md-2">
+                            <label for="cEdu"> การศีกษา</label>
+                            {{form.cEdu}}  
+                          </div>
+                          <div class="col-md-2">
+                            <label for="cCareer"> อาชีพ</label>
+                            {{form.cCareer}}  
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <div class="col-md-3">
+                            <label for="cRoom"> พุทธสถาน</label>
+                            {{form.cRoom}}                   
+                          </div>
+                          <div class="col-md-3">
+                            <label for="cRec"> อ.แนะนำ</label>
+                            {{form.cRec}}  
+                          </div>
+                          <div class="col-md-3">
+                            <label for="cSup"> อ.รับรอง</label>
+                            {{form.cSup}}                   
+                          </div>
+                          <div class="col-md-3">
+                            <label for="cHtel"> โทรศัพท์บ้าน</label>
+                            {{form.cHtel}}  
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <div class="col-md-9">
+                            <label for="cAddress"> ที่อยู่</label>
+                            {{form.cAddress}}  
+                          </div>
+                          <div class="col-md-3">
+                            <label for="cMtel"> โทรศัพท์มือถือ</label>
+                            {{form.cMtel}}                   
+                          </div>
+                        </div>
+                      </div>
+                      <!-- Datail-2 -->
+                      <div id="detail-2" class="tab-pane">                      
+                        <div class="row mb-3">
+                          <div class="col-md-3">
+                            <label for="c3dd"> ชั้น 3 วัน (ว/ด/ป)</label>
+                            {{form.c3dd}}  
+                          </div>
+                          <div class="col-md-3">
+                            <label for="c3dl"> สถานธรรม</label>
+                            {{form.c3dl}}  
+                          </div>
+                          <div class="col-md-3">
+                            <label for="cMd"> ชั้น หมิงเต๋อ (ว/ด/ป)</label>
+                            {{form.cMd}}  
+                          </div>
+                          <div class="col-md-3">
+                            <label for="cMl}"> สถานธรรม</label>
+                            {{form.cMl}}                   
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <div class="col-md-3">
+                            <label for="cSd"> ชั้น ซินหมิน</label>
+                            {{form.cSd}}  
+                          </div>
+                          <div class="col-md-3">
+                            <label for="cSl"> สถานธรรม</label>
+                            {{form.cSl}}  
+                          </div>
+                          <div class="col-md-3">
+                            <label for="cJd"> ชั้น จื่อซัน</label>
+                            {{form.cJd}}  
+                          </div>
+                          <div class="col-md-3">
+                            <label for="cJl"> สถานธรรม</label>
+                            {{form.cJl}}                   
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <div class="col-md-2">
+                            <label for="cPt1"> ตั้งปณิธาน ข้อที่ 1</label>
+                            {{form.cPt1}}  
+                          </div>
+                          <div class="col-md-2">
+                            <label for="cPt2"> ข้อที่ 2</label>
+                            {{form.cPt2}}  
+                          </div>
+                          <div class="col-md-2">
+                            <label for="cPt3"> ข้อที่ 3</label>
+                            {{form.cPt3}}  
+                          </div>
+                          <div class="col-md-2">
+                            <label for="cPt4"> ข้อที่ 4</label>
+                            {{form.cPt4}}                   
+                          </div>
+                          <div class="col-md-2">
+                            <label for="cPt5"> ข้อที่ 5</label>
+                            {{form.cPt5}}                   
+                          </div>
+                          <div class="col-md-2">
+                            <label for="cPt6"> ข้อที่ 6</label>
+                            {{form.cPt6}}                   
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <div class="col-md-2">
+                            <label for="cCd"> 3.ชิงโข่ว (ว/ด/ป)</label>
+                            {{form.cCd}}  
+                          </div>
+                          <div class="col-md-2">
+                            <label for="cCl"> สถานธรรม</label>
+                            {{form.cCl}}  
+                          </div>
+                          <div class="col-md-2">
+                            <label for="cCp"> เตี่ยนฉวนซือ</label>
+                            {{form.cCp}}  
+                          </div>
+                          <div class="col-md-2">
+                            <label for="cUd"> 4.อุทิศตน (ว/ด/ป)</label>
+                            {{form.cUd}}                   
+                          </div>
+                          <div class="col-md-2">
+                            <label for="cUl"> สถานธรรม</label>
+                            {{form.cUl}}                   
+                          </div>
+                          <div class="col-md-2">
+                            <label for="cUp"> เตี่ยนฉวนซือ</label>
+                            {{form.cUp}}                   
+                          </div>
+                        </div>
+                      </div>
+                      <!-- Datail-3 -->
+                      <div id="detail-3" class="tab-pane">                      
+                        <div class="row mb-3">
+                          <div class="col-md-2">
+                            <label for="cRd"> 5.ตั้งหัองพระ (ว/ด/ป)</label>
+                            {{form.cRd}}  
+                          </div>
+                          <div class="col-md-2">
+                            <label for="cRl"> สถานธรรม</label>
+                            {{form.cRl}}  
+                          </div>
+                          <div class="col-md-2">
+                            <label for="cRp"> เตี่ยนฉวนซือ</label>
+                            {{form.cRp}}  
+                          </div>
+                          <div class="col-md-2">
+                            <label for="cPd"> 6.เผยแพร่ (ว/ด/ป)</label>
+                            {{form.cPd}}  
+                          </div>
+                          <div class="col-md-2">
+                            <label for="cPl"> สถานธรรม</label>
+                            {{form.cPl}}  
+                          </div>
+                          <div class="col-md-2">
+                            <label for="cPp"> เตี่ยนฉวนซือ</label>
+                            {{form.cPp}}  
+                          </div>                        
+                        </div>                      
+                        <div class="row mb-3">
+                          <div class="col-md-2">
+                            <label for="cJvd"> เจี่ยงเอี๋ยน (ว/ด/ป)</label>
+                            {{form.cJvd}}  
+                          </div>
+                          <div class="col-md-2">
+                            <label for="cJvl"> สถานธรรม</label>
+                            {{form.cJvl}}  
+                          </div>
+                          <div class="col-md-2">
+                            <label for="cJvp"> เตี่ยนฉวนซือ</label>
+                            {{form.cJvp}}  
+                          </div>
+                          <div class="col-md-2">
+                            <label for="cTjd"> ถันจู่ (ว/ด/ป)</label>
+                            {{form.cTjd}}  
+                          </div>
+                          <div class="col-md-2">
+                            <label for="cTjl"> สถานธรรม</label>
+                            {{form.cTjl}}  
+                          </div>
+                          <div class="col-md-2">
+                            <label for="cTjp"> เตี่ยนฉวนซือ</label>
+                            {{form.cTjp}}  
+                          </div>                        
+                        </div>
+                        <div class="row mb-3">
+                          <div class="col-md-2">
+                            <label for="cJcd"> เจี่ยงซือ (ว/ด/ป))</label>
+                            {{form.cJcd}}  
+                          </div>
+                          <div class="col-md-2">
+                            <label for="cJcl"> สถานธรรม</label>
+                            {{form.cJcl}}  
+                          </div>
+                          <div class="col-md-2">
+                            <label for="cJcp"> เตี่ยนฉวนซือ</label>
+                            {{form.cJcp}}  
+                          </div>
+                          <div class="col-md-2">
+                            <label for="cPrd"> ต.ฉ.ซ (ว/ด/ป)</label>
+                            {{form.cPrd}}  
+                          </div>
+                          <div class="col-md-2">
+                            <label for="cPrl"> สถานธรรม</label>
+                            {{form.cPrl}}  
+                          </div>
+                          <div class="col-md-2">
+                            <label for="cPrp"> เตี่ยนฉวนซือ (ทำพิธี)</label>
+                            {{form.cPrp}}  
+                          </div>                        
+                        </div>                      
+                      </div>
+                      <!-- Datail-4 -->
+                      <div id="detail-4" class="tab-pane">
+                        สำหรับ เพิ่มเติมข้อมูลในอนาคต
+                      </div>
+                  </div>
+              </div>
+           </div>
+            <div class="row">              
+                <div class="col-md-12">
+                  <a href="{% url 'tableall' %}" class="btn btn-secondary btn-block btn-lg">Close</a>
+                </div>              
+            </div>
+      </form>
+    </div>
+  </div>
+</main>
+<script>
+
+</script>
+
+{% endblock main_content %} 

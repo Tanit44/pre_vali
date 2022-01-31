@@ -1,0 +1,55 @@
+{% extends 'layouts/base_all.html' %}
+
+{% block main_content %}
+
+<main class="app-content">
+  <div class="app-title">
+    <div>
+      <h1><i class="fa fa-address-card"></i> ระบบฐานข้อมูลกลาง</h1>
+      <p>สำหรับ เพิ่มประเภทผู้ใช้งาน</p>
+    </div>
+    <ul class="app-breadcrumb breadcrumb">
+      <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+      <li class="breadcrumb-item"><a href="#">เพิ่มประเภทผู้ใช้งาน</a></li>
+    </ul>
+  </div>
+  <div class="row">
+    <div class="col-md-6 mx-auto">
+      <div class="tile">
+        <h3 class="tile-title">Add User Type Form</h3>
+        <h6 class="card-category">
+          {% if msg %}
+            <span class="text-danger">{{ msg }}</span>
+          {% else %}
+              กรูณากรอกรายละเอียด
+          {% endif %}  
+          </h6> 
+          {% if success %}
+          <div class="row">
+            <div class="col-md-8 col-md-offset-3">
+              <a class="btn btn-primary"  href="{% url 'add_user_type' %}"><i class="fa fa-fw fa-lg fa-check-circle"></i> Continue</a>&nbsp;&nbsp;&nbsp;<a class="btn btn-secondary" href="{% url 'admin_home' %}"><i class="fa fa-fw fa-lg fa-times-circle"></i>Cancel</a>
+            </div>
+          </div>
+          {% else %}
+        <form role="form" method="post" action="">                
+          {% csrf_token %}
+        <div class="tile-body">
+          <div class="form-group">
+            <label class="small mb-1" for="inputFirstName">User Type</label>
+            {{ form.user_type_name }}           
+          </div>          
+        </div>
+        <div class="tile-footer">
+          <button class="btn btn-primary" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>Save</button>&nbsp;&nbsp;&nbsp;<a class="btn btn-secondary" href="{% url 'admin_home' %}"><i class="fa fa-fw fa-lg fa-times-circle"></i>Cancel</a>
+        </div>
+        </form>
+        {% endif %}
+      </div>
+    </div>
+  
+    <div class="clearix"></div>
+   
+  </div>
+</main>
+
+{% endblock main_content %} 

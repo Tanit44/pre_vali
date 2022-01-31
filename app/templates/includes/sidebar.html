@@ -1,0 +1,45 @@
+{% load static %}
+    <aside class="app-sidebar">
+      <div class="app-sidebar__user"><img class="app-sidebar__user-avatar" src="{% static 'images/10.png' %}" alt="User Image" width="50">
+        <div>
+          <p class="app-sidebar__user-name">{{ user.username }}</p>
+          <!-- <p class="app-sidebar__user-designation">Frontend Developer</p> -->
+        </div>
+      </div>
+      <ul class="app-menu">
+        {% if user.user_type == "1" %}
+          {% url 'admin_home' as admin_home %}
+          <li><a class="app-menu__item {% if request.path == admin_home %} active {% endif %}" href="{{ admin_home }}"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label"> Admin Dashboard</span></a></li>
+          {% url 'add_user_type' as add_user_type %}
+          <li><a class="app-menu__item {% if request.path == add_user_type %} active {% endif %}" href="{{ add_user_type }}"><i class="app-menu__icon fa fa-id-card"></i><span class="app-menu__label"> Add User Type</span></a></li>
+          {% url 'staff' as staff %}
+          <li><a class="app-menu__item {% if request.path == staff %} active {% endif %}" href="{{ staff }}"><i class="app-menu__icon fa fa-id-card"></i><span class="app-menu__label"> Staff List</span></a></li>
+          {% url 'tableall' as tableall %}
+          <li><a class="app-menu__item {% if request.path == tableall %} active {% endif %}" href="{{ tableall }}"><i class="app-menu__icon fa fa-align-justify"></i><span class="app-menu__label"> TableAll</span></a></li>
+        {% elif user.user_type == "2" %}
+          {% url 'bkk1_home' as bkk1_home %}
+          <li><a class="app-menu__item {% if request.path == bkk1_home %} active {% endif %}" href="{{ bkk1_home }}"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label"> Bkk1 Dashboard</span></a></li>
+          {% url 'bkk1' as bkk1 %}
+          <li><a class="app-menu__item {% if request.path == bkk1 %} active {% endif %}" href="{{ bkk1 }}"><i class="app-menu__icon fa fa-id-card"></i><span class="app-menu__label"> กลุ่ม กทม</span></a></li>
+          {% url 'bkk1001' as bkk1001 %}
+          <li><a class="app-menu__item {% if request.path == bkk1001 %} active {% endif %}" href="{{ bkk1001 }}"><i class="app-menu__icon fa fa-id-card"></i><span class="app-menu__label"> หมิงซิน</span></a></li>
+          {% url 'bkk1002' as bkk1002 %}
+          <li><a class="app-menu__item {% if request.path == bkk1002 %} active {% endif %}" href="{{ bkk1002 }}"><i class="app-menu__icon fa fa-id-card"></i><span class="app-menu__label"> หมิงฮุย</span></a></li>
+          {% url 'bkk1003' as bkk1003 %}
+          <li><a class="app-menu__item {% if request.path == bkk1003 %} active {% endif %}" href="{{ bkk1003 }}"><i class="app-menu__icon fa fa-id-card"></i><span class="app-menu__label"> ฉือเฉิง</span></a></li>
+        {% elif user.user_type == "3" %}
+          {% url 'skw1_home' as skw1_home %}
+          <li><a class="app-menu__item {% if request.path == skw1_home %} active {% endif %}" href="{{ skw1_home }}"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label"> Skw1 Dashboard</span></a></li>
+          {% url 'skw1' as skw1 %}
+          <li><a class="app-menu__item {% if request.path == skw1 %} active {% endif %}" href="{{ skw1 }}"><i class="app-menu__icon fa fa-id-card"></i><span class="app-menu__label"> กลุ่ม กบินทร์บุรี</span></a></li>
+          {% url 'skw1001' as skw1001 %}
+          <li><a class="app-menu__item {% if request.path == skw1001 %} active {% endif %}" href="{{ skw1001 }}"><i class="app-menu__icon fa fa-id-card"></i><span class="app-menu__label"> ฝ่าเซิ่ง</span></a></li>
+          {% url 'skw1002' as skw1002 %}
+          <li><a class="app-menu__item {% if request.path == skw1002 %} active {% endif %}" href="{{ skw1002 }}"><i class="app-menu__icon fa fa-id-card"></i><span class="app-menu__label"> ฉืออี</span></a></li>
+          {% url 'skw1003' as skw1003 %}
+          <li><a class="app-menu__item {% if request.path == skw1003 %} active {% endif %}" href="{{ skw1003 }}"><i class="app-menu__icon fa fa-id-card"></i><span class="app-menu__label"> ฉือจิ้ง</span></a></li>
+
+          {% endif %}
+          <li><a class="app-menu__item" href="/"><i class="app-menu__icon fa fa-sign-out fa-lg"></i><span class="app-menu__label"> Logout</span></a></li>
+      </ul>
+    </aside>

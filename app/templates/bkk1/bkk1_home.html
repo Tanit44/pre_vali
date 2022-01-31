@@ -1,0 +1,56 @@
+{% extends 'layouts/base_all.html' %}
+
+{% block main_content %}
+
+<main class="app-content">
+  <div class="app-title">
+    <div>
+      <h1><i class="fa fa-dashboard"></i> ระบบฐานข้อมูลกลาง</h1>
+      <p>สำหรับผู้บริหาร กลุ่ม กทม</p>
+    </div>
+    <ul class="app-breadcrumb breadcrumb">
+      <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+      <li class="breadcrumb-item"><a href="#">กลุ่ม กทม</a></li>
+    </ul>
+  </div>
+  <div class="row">
+    <div class="col-md-6 col-lg-3">
+      <div class="widget-small primary coloured-icon"><i class="icon fa fa-id-card fa-3x"></i>
+        <div class="info">
+          <h4>ทั้งหมด</h4>
+          <p><b>{{ total_bkk1 }} ท่าน</b></p>
+          <p><a href="{% url 'bkk1' %}" class="small-box-footer">More info ...... <i class="fa fa-arrow-circle-right"></i></a></p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-3">
+      <div class="widget-small info coloured-icon"><i class="icon fa fa-id-card fa-3x"></i>
+        <div class="info">
+          <h4>หมิงซิน</h4>
+          <p><b>{{ total_bkk1001 }} ท่าน</b></p>
+          <p><a href="{% url 'bkk1001' %}" class="small-box-footer">More info ...... <i class="fa fa-arrow-circle-right"></i></a></p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-3">
+      <div class="widget-small warning coloured-icon"><i class="icon fa fa-id-card fa-3x"></i>
+        <div class="info">
+          <h4>หมิงฮุย</h4>
+          <p><b>{{ total_bkk1002 }} ท่าน</b></p>
+          <p><a href="{% url 'bkk1002' %}" class="small-box-footer">More info ...... <i class="fa fa-arrow-circle-right"></i></a></p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-3">
+      <div class="widget-small danger coloured-icon"><i class="icon fa fa-id-card fa-3x"></i>
+        <div class="info">
+          <h4>ฉือเฉิง</h4>
+          <p><b>{{ total_bkk1003 }} ท่าน</b></p>
+          <p><a href="{% url 'bkk1003' %}" class="small-box-footer">More info ...... <i class="fa fa-arrow-circle-right"></i></a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+{% endblock main_content %} 

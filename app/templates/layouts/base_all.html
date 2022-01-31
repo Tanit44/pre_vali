@@ -1,0 +1,281 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="description" content="Vali is a responsive and free admin theme built with Bootstrap 4, SASS and PUG.js. It's fully customizable and modular.">
+    <!-- Twitter meta-->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:site" content="@pratikborsadiya">
+    <meta property="twitter:creator" content="@pratikborsadiya">
+    <!-- Open Graph Meta-->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Vali Admin">
+    <meta property="og:title" content="Vali - Free Bootstrap 4 admin theme">
+    <meta property="og:url" content="http://pratikborsadiya.in/blog/vali-admin">
+    <meta property="og:image" content="http://pratikborsadiya.in/blog/vali-admin/hero-social.png">
+    <meta property="og:description" content="Vali is a responsive and free admin theme built with Bootstrap 4, SASS and PUG.js. It's fully customizable and modular.">
+    <!-- Favicon icon -->
+    <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
+    <title>ระบบฐานข้อมูลกลาง - Data Center</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Main CSS-->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+    <!-- Font-icon css-->
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  </head>
+  <body class="app sidebar-mini">
+    <!-- Navbar-->
+    <header class="app-header"><a class="app-header__logo" href="#">聿德慈航</a>
+      <!-- Sidebar toggle button--><a class="app-sidebar__toggle" href="#" data-toggle="sidebar" aria-label="Hide Sidebar"></a>
+      <!-- Navbar Right Menu-->
+      <ul class="app-nav">
+
+       
+        <!-- User Menu-->
+        <li class="dropdown"><a class="app-nav__item" href="#" data-toggle="dropdown" aria-label="Open Profile Menu"><i class="fa fa-user fa-lg"></i></a>
+          <ul class="dropdown-menu settings-menu dropdown-menu-right">
+            <li><a class="dropdown-item" href="/"><i class="fa fa-sign-out fa-lg"></i> Logout</a></li>
+          </ul>
+        </li>
+      </ul>
+    </header>
+    <!-- Sidebar menu-->
+    {% include 'includes/sidebar.html' %}
+
+    {% block main_content %}
+
+    {% endblock main_content %} 
+    
+    <!-- Essential javascripts for application to work-->
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    <!-- The javascript plugin to display page loading on top-->
+    <script src="{% static 'js/plugins/pace.min.js' %}"></script>
+    <!-- Page specific javascripts-->
+    <script type="text/javascript" src="{% static 'js/plugins/chart.js' %}"></script>
+        <!-- Data table plugin-->
+    <!-- <script type="text/javascript" src="../static/js/plugins/jquery.dataTables.min.js"></script> -->
+    <!-- <script type="text/javascript" src="../static/js/plugins/dataTables.bootstrap.min.js"></script> -->
+
+    <!-- Bootstrap CSS -->
+    <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.css" rel="stylesheet"> -->
+    <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/select/1.2.7/css/select.dataTables.min.css" rel="stylesheet">
+
+    <!-- jQuery first, then Tether, then Bootstrap JS. -->
+    <!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/js/bootstrap.min.js"></script> -->
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+
+    <script type="text/javascript">
+
+    </script>
+
+<script>
+  $(document).ready(function () {
+  
+      // Selected record id
+      let selected = [];
+  
+      // DataTables settings
+      // https://datatables.net/reference/index
+      let table = $('#datatable').DataTable({
+  
+          // Server-side processing: Ajax mode setting
+          // https://datatables.net/examples/server_side/simple.html
+          processing: true,
+          serverSide: true,
+          {% if user.user_type == "1" %}
+          ajax: "./tablealls",
+          {% elif user.user_type == "2" %}
+          ajax: "./bkk1s",
+          {% elif user.user_type == "3" %}
+          ajax: "./skw1s",
+          {% endif %}
+          // dom: Arrangement of various widgets such as search fields
+          // https://datatables.net/reference/option/dom
+          // dom: 'lfrtip',
+  
+          // lengthMenu: List of the number of items to be displayed on one page
+          // https://datatables.net/reference/option/lengthMenu
+          lengthMenu: [[5, 10, 20, 50, -1], [5, 10, 20, 50, "All"]],
+  
+          // pageLength: Initial value of pageLength
+          // https://datatables.net/reference/option/pageLength
+          pageLength: 5,    
+  
+          // rowCallback: Used when you want to perform additional processing when drawing a row
+          // https://datatables.net/reference/option/rowCallback
+  
+          // The display of the selected line is changed at the time of page transition
+          rowCallback: function (row, data) {
+              $(row).attr('data-id', data[0]);
+              if ($.inArray(data[0], selected) !== -1) {
+                  $(row).addClass('selected');
+              }
+          },
+  
+          // columns: Column settings
+          // https://datatables.net/reference/option/columns
+  
+          // Columns are set with'columns' or'columnDefs'.
+          // columns Is a more verbose description, but I feel that the visibility is good
+  
+          // Fields are assigned to columns in the order in which the BaseDatatableView columns are set
+          // Note that an error will occur if the number of columns is less than the number of fields in columns
+  
+          // If you want to change the contents of columns and the actual column display, you can use the following options
+  
+          // visible: bool    Show / hide columns
+          // data: number     Display data in different columns
+          // render: function Process data with functions
+  
+          // You can also use data from other columns in the render
+          // https://datatables.net/manual/data/renderers
+  
+          columns: [
+              {
+                  // 1 column (id)
+                  title: "&nbsp;",
+                  className: 'select-checkbox',
+                  searchable: false,
+                  render: function () {
+                      return "";
+                  },
+              },
+              {
+                  // 2 column
+                  title: "รหัส",
+              },
+              {
+                  // 3 column
+                  title: "เพศ",
+              },
+              {
+                  // 4 column
+                  title: "ชื่อ-นามสกุล",
+                  render: function (data, type, row, full) {
+                        return '<a href=tableall/' + row[0] + '>' + data + '</a>';
+                    },
+              },
+              {
+                  // 5 column
+                  title: "อายุ",
+              },
+              {
+                  // 6 column
+                  title: "สถานธรรม",
+                  // google map
+                  // http://www.shurey.com/html/googlemaps.html
+                  // render: function (data, type, row) {
+                  //     return '<a target="_blank" href="https://maps.google.co.jp/maps?q=' + row[1] + data + '">' + data + '</a>';
+                  // },
+              },
+              {
+                  // 7 column
+                  title: "วันรับธรรมะ",
+                  // ハイパーリンク追加のサンプル
+                  // render: function (data) {
+                  //     let telno = data.replace(/\-/g, '');
+                  //     return '<a href="tel:' + telno + '">' + data + '</a>';
+                  // },
+              },
+              {
+                  // 8 column
+                  title: "เตี่ยนฉวนซือ",
+              },
+              {
+                  // 9 column
+                  title: "อ.แนะนำ",
+              },
+              
+          ],
+      });
+  
+  
+      // When using server-side, extension selection (Select) cannot be used, so DataTables official
+      // Create your own selection process based on the sample code
+      // https://datatables.net/examples/server_side/select_rows.html
+      $('#datatable tbody').on('click', 'tr', function () {
+  
+          let id = $(this).attr('data-id');
+          let index = $.inArray(id, selected);
+  
+          if (index === -1) {
+  
+              selected.push(id);
+              selected.sort(function (a, b) {
+                  return a - b
+              });
+              $(this).addClass('selected');
+          } else {
+              selected.splice(index, 1);
+              $(this).removeClass('selected');
+          }
+          $('#selected').html(selected.join(','));
+      });
+  
+      // Sample: Get the data of the clicked record
+      // Data () can be used to get data for cells, rows, and the entire table being displayed
+      // https://datatables.net/reference/api/row().data()
+  
+      $('#datatable tbody').on('click', 'tr', function () {
+          console.log(table.row(this).data());
+      });
+  
+      // Deselect all
+      $('#clear').on('click', function () {
+          selected = [];
+          $('#datatable tr').removeClass('selected');
+          $('#selected').html(selected.join(','));
+      });
+  
+      // Print / Excel / CSV button click
+      $('.report').on('click', function () {
+  
+          if (selected.length == 0) {
+              alert('Please select the data first');
+              return false;
+          }
+  
+          // Store the selected id in the hidden form and send it to the Web API of each function
+          let form = $("#form")[0];
+          $("*[name=id_list]").val(selected.join('_'));
+          form.method = 'GET';
+  
+          // Note the length limit of GET queries. This code does not take into account the selection of large numbers
+          // https://support.microsoft.com/ja-jp/help/208427/maximum-url-length-is-2-083-characters-in-internet-explorer
+  
+          // Processing judgment by button id
+          switch (this.id) {
+              case
+              'print':
+                  // Open a separate window for printing only
+                  window.open('', 'new_window');
+                  form.action = 'print';
+                  form.target = 'new_window';
+                  form.submit();
+                  break;
+              case
+              'excel':
+                  form.action = 'excel';
+                  form.submit();
+                  break;
+              case
+              'csv':
+                  form.action = 'csv';
+                  form.submit();
+                  break;
+          }
+      });
+  });
+    
+  </script>
+
+  </body>
+</html>

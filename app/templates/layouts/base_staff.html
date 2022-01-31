@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="description" content="Vali is a responsive and free admin theme built with Bootstrap 4, SASS and PUG.js. It's fully customizable and modular.">
+    <!-- Twitter meta-->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:site" content="@pratikborsadiya">
+    <meta property="twitter:creator" content="@pratikborsadiya">
+    <!-- Open Graph Meta-->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Vali Admin">
+    <meta property="og:title" content="Vali - Free Bootstrap 4 admin theme">
+    <meta property="og:url" content="http://pratikborsadiya.in/blog/vali-admin">
+    <meta property="og:image" content="http://pratikborsadiya.in/blog/vali-admin/hero-social.png">
+    <meta property="og:description" content="Vali is a responsive and free admin theme built with Bootstrap 4, SASS and PUG.js. It's fully customizable and modular.">
+    <!-- Favicon icon -->
+    <link rel="icon" href="../static/images/favicon.ico" type="image/x-icon">
+    <title>ระบบฐานข้อมูลกลาง - Data Center</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Main CSS-->
+    <link rel="stylesheet" type="text/css" href="../static/css/main.css">
+    <!-- Font-icon css-->
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  </head>
+  <body class="app sidebar-mini">
+    <!-- Navbar-->
+    <header class="app-header"><a class="app-header__logo" href="index.html">聿德慈航</a>
+      <!-- Sidebar toggle button--><a class="app-sidebar__toggle" href="#" data-toggle="sidebar" aria-label="Hide Sidebar"></a>
+      <!-- Navbar Right Menu-->
+      <ul class="app-nav">
+
+       
+        <!-- User Menu-->
+        <li class="dropdown"><a class="app-nav__item" href="#" data-toggle="dropdown" aria-label="Open Profile Menu"><i class="fa fa-user fa-lg"></i></a>
+          <ul class="dropdown-menu settings-menu dropdown-menu-right">
+            <li><a class="dropdown-item" href="/"><i class="fa fa-sign-out fa-lg"></i> Logout</a></li>
+          </ul>
+        </li>
+      </ul>
+    </header>
+    <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
+    <!-- Sidebar menu-->
+    {% include 'includes/sidebar.html' %}
+
+    {% block main_content %}
+
+    {% endblock main_content %} 
+    
+    <!-- Essential javascripts for application to work-->
+    <script src="../static/js/jquery-3.3.1.min.js"></script>
+    <script src="../static/js/popper.min.js"></script>
+    <script src="../static/js/bootstrap.min.js"></script>
+    <script src="../static/js/main.js"></script>
+    <!-- The javascript plugin to display page loading on top-->
+    <script src="../static/js/plugins/pace.min.js"></script>
+    <!-- Page specific javascripts-->
+    <script type="text/javascript" src="../static/js/plugins/chart.js"></script>
+    {% block custom_js %}
+    <!-- Data table plugin-->
+    <script type="text/javascript" src="../static/js/plugins/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="../static/js/plugins/dataTables.bootstrap.min.js"></script>
+
+    <script type="text/javascript"></script>
+
+<script>
+  /*
+* Constant definition (pseudo enumeration type)
+*/
+
+// Correspondence between data array and column order
+let Columns = {
+  "id": 0,
+  // "nId_person": 1,
+  // "nAge": 2,
+}
+
+/*
+* jQuery
+*/
+$(document).ready(function () {
+
+  /*
+   * DataTables settings
+   */
+
+  let table = $('#datatable').DataTable({
+      // Ajax settings
+      processing: true,
+      serverSide: true,
+      ajax: "./api/{{s}}",
+      // View settings
+      // dom: "tp",    
+      // lengthMenu: List of the number of items to be displayed on one page
+      // https://datatables.net/reference/option/lengthMenu
+      lengthMenu: [[5, 10, 20, 50, -1], [5, 10, 20, 50, "All"]],
+      // pageLength: Initial value of pageLength
+      // https://datatables.net/reference/option/pageLength
+      pageLength: 5,
+      // order: [Columns.id, "desc"],   // Update id newest
+
+      // Column settings
+      columns: [
+
+          // 「className: "none",」Columns defined as are displayed in the detail row
+          //  Sequence By JsonView
+          {
+              // column 1 id (Hide)
+              title: "&nbsp;",
+              visible: false,
+              // title: "id",
+              // className: "none",
+          },
+          {
+              // column 3 nId_person
+              title: "User name",
+              className: "none",
+          },
+          {
+              // column 2 cFname
+              title: "First name",
+              orderable: false,
+          },
+          {
+              // column 4 cGender
+              title: "Last name",
+              className: "none",
+          },
+          {
+              // column 5 nAge
+              title: "Email",
+              className: "none",
+          },
+          {
+              // column cPro
+              title: "User Type",
+              className: "none",
+          },
+          // {
+          //     // column dDate
+          //     title: "วันรับธรรมะ",
+          //     className: "none",
+          // },            
+          // {
+          //     // column cRec
+          //     title: "อ.แนะนำ",
+          //     className: "none",
+          // },
+          
+          // {
+          //     // column cSup
+          //     title: "อ.รับรอง",
+          //     className: "none",
+          // },
+          {
+            title: "เครื่องมือ",  
+            data: 0 ,
+            render: function(data, type, full) {
+              return '<a class="btn btn-danger btn-sm ml-3" href=delete/{{id_room}}/' + full[0] + '>' + 'Delete' + '</a>';
+              },
+          },            
+      ],
+  });
+});
+
+</script>
+  {% endblock custom_js %}
+  </body>
+</html>
